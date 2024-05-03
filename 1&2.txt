@@ -92,3 +92,6 @@ def remove_outliers(df, feature):
     return df
 df = remove_outliers(df, 'math_score')
 sns.boxplot(data = df, x = 'math_score')
+
+df['writing score'] = np.sqrt(df['writing score'])
+df['writing score'].skew() 
