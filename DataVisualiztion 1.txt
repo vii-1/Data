@@ -1,0 +1,51 @@
+import pandas as pd
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+%matplotlib inline
+
+titanic = pd.read_csv("Titanic-Dataset.csv")
+titanic.head()
+
+plt.figure(figsize=(8, 6))
+sns.countplot(x='class', hue='class', data=titanic, palette='Set1', legend=False)
+plt.title('Number of Passengers in Each Class')
+plt.show()
+
+plt.figure(figsize=(8, 6))
+sns.countplot(x='class', hue='sex', data=titanic, palette='viridis')
+plt.title('Number of Passengers in Each Class Based on Gender')
+plt.show()
+
+plt.figure(figsize=(10, 6))
+sns.boxplot(x='class', y='age', hue='class', legend=False, data=titanic, palette='coolwarm')
+plt.title('Age Distribution in Each Class')
+plt.show()
+
+plt.figure(figsize=(8, 6))
+sns.countplot(x='survived', data=titanic, palette='pastel')
+plt.title('Number of Passengers who Survived (1) and Did Not Survive (0)')
+plt.show()
+
+plt.figure(figsize=(8, 6))
+sns.countplot(x='survived', hue='class', data=titanic, palette='Set2')
+plt.title('Survival Status Based on Class')
+plt.show()
+
+plt.figure(figsize=(10, 6))
+sns.histplot(titanic['fare'], bins=30, kde=True, color='red')
+plt.title('Distribution of Ticket Prices')
+plt.xlabel('Fare')
+plt.ylabel('Frequency')
+plt.show()
+
+//////
+The histogram shows the distribution of ticket prices paid by passengers aboard the Titanic. Most fares were concentrated at lower values, with a long tail of higher fares. This suggests a diverse range of passengers with varying economic means, with the majority paying lower fares.
+
+Conclusion
+
+Passenger Class Distribution: Most people were in the cheapest class, and fewer were in the more expensive ones.
+
+Passenger Class Distribution by Gender: There were more men than women, especially in the cheapest class.
+
+Distribution of Ticket Prices: Most tickets were cheap, but some were really expensive, showing that people with different amounts of money were on the ship.

@@ -1,0 +1,61 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+df=pd.read_csv('BostonHousing.csv')
+df.shape
+
+df.isnull().sum()
+
+df=df.dropna()
+df.isnull().sum()
+
+
+plt.figure(figsize = (20, 15))
+plotnumber = 1
+for column in df:
+    if plotnumber <= 14:
+        ax = plt.subplot(3, 5, plotnumber)
+        sns.histplot(df[column])
+        plt.xlabel(column, fontsize = 15)
+        
+    plotnumber += 1
+    
+plt.tight_layout()
+plt.show()
+
+
+df.corr(method='pearson').sort_values(by='medv',ascending=False)
+
+X=df[['rm','zn','b','dis','chas']]
+Y=df['medv']
+
+from sklearn.model_selection import train_test_split
+xtrain,xtest,ytrain,ytest=train_test_split(X,Y,test_size=0.2)
+print(xtrain.shape)
+
+from sklearn.preprocessing import StandardScaler
+scalar=StandardScaler()
+xtrain=scalar.fit_transform(xtrain)
+xtest=scalar.transform(xtest)
+print(xtrain.shape)
+
+
+from sklearn.linear_model import LinearRegression
+reg = LinearRegression()
+reg.fit(xtrain, ytrain)
+
+
+plt.scatter(ytest, y_pred)
+ideal_values = np.linspace(min(ytest), max(ytest))  
+plt.plot(ideal_values, ideal_values, color='red')
+plt.xlabel("Price: in $1000's")
+plt.ylabel("Predicted value")
+plt.title("True value vs predicted value : Linear Regression")
+plt.show()
+
+from sklearn import metrics
+print('MAE:', metrics.mean_absolute_error(ytest, y_pred))
+print('MSE:', metrics.mean_squared_error(ytest, y_pred))
+print('RMSE:', np.sqrt(metrics.mean_squared_error(ytest, y_pred)))

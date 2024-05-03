@@ -1,0 +1,33 @@
+// Hadoop
+
+hadoop version
+java -version
+sudo systemctl start ssh
+start-all.sh //start Hadoop 
+stop-all.sh //stop Hadoop
+jsp // 6 nodes start honar aahet
+
+hadoop fs -mkdir /user1
+hadoop fs -mkdir /user1/input
+hadoop fs -put input.txt /user1/input -->Putting input file
+hadoop jar filename.jar /user1/input /user1/output -->adding jar file
+hadoop fs -cat /user1/output/*   --> Output
+ 
+
+// Scala 
+
+spark-shell
+:load filename.scala
+
+code==>
+val data=sc.textFile("word_count.txt")
+data.collect;
+
+val splitdata = data.flatMap(line => line.split(" "));
+splitdata.collect;
+
+val mapdata = splitdata.map(word => (word,1));
+mapdata.collect;
+
+val reducedata = mapdata.reduceByKey(_+_);
+reducedata.collect;

@@ -1,0 +1,43 @@
+import numpy as np 
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from seaborn import set_theme
+
+csv_url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data'
+# using the attribute information as the column names
+col_names = ['Sepal_Length','Sepal_Width','Petal_Length','Petal_Width','Class']
+df =  pd.read_csv(csv_url, names = col_names)
+
+df.head(10)
+df.dtypes
+
+fig, axes = plt.subplots(2, 2, figsize=(18, 10))
+
+fig.suptitle('Feature Distribution by Class')
+
+sns.histplot(ax=axes[0, 0], data=df, x='Sepal_Length', hue='Class')
+sns.histplot(ax=axes[0, 1], data=df, x='Sepal_Width', hue='Class')
+sns.histplot(ax=axes[1, 0], data=df, x='Petal_Length', hue='Class')
+sns.histplot(ax=axes[1, 1], data=df, x='Petal_Width', hue='Class')
+
+fig, axes = plt.subplots(2, 2, figsize=(18, 10))
+
+fig.suptitle('Feature Distribution by Class')
+
+sns.boxplot(ax=axes[0, 0], data=df, x='Sepal_Length', y='Class', hue='Class')
+sns.boxplot(ax=axes[0, 1], data=df, x='Sepal_Width', y='Class', hue='Class')
+sns.boxplot(ax=axes[1, 0], data=df, x='Petal_Length', y='Class', hue='Class')
+sns.boxplot(ax=axes[1, 1], data=df, x='Petal_Width', y='Class', hue='Class')
+
+sns.scatterplot(data = df, x = 'Sepal_Length', y = 'Sepal_Width', hue = 'Class')
+
+sns.scatterplot(data = df, x = 'Petal_Length', y = 'Petal_Width', hue = 'Class')
+
+////
+Conclusions :
+For Iris-setosa sepal-length, petal-length, petal-width is smaller and for Iris-virginica sepal-length, petal-length, petal-width is greater.
+Sepal-width of Iris-setosa is greater than other two species.
+From scatter plot and boxplot, it is clear that Iris-setosa has smaller length ratio of petal-length and petal-width.
+From scatter plot and boxplot, it is seen that Iris-virginica has greater length ratio of petal-length and petal-width.
+Iris-versicolor shows average features.

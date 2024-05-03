@@ -1,0 +1,56 @@
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+# import seaborn as sns
+
+df=pd.read_csv('Social_Network_Ads.csv')
+df.head()
+
+df['Gender']=df['Gender'].map({'Male':1,'Female':0})
+df.head()
+
+#pairplot
+# sns.pairplot(df, hue='Purchased')
+# plt.show()
+
+x=df.drop('Purchased',axis=1)
+y=df['Purchased']
+
+from sklearn.model_selection import train_test_split
+xtrain,xtest,ytrain,ytest=train_test_split(x,y,test_size=0.2)
+
+from sklearn.preprocessing import StandardScaler
+scaler=StandardScaler()
+xtrain=scaler.fit_transform(xtrain)
+xtest=scaler.transform(xtest)
+
+from sklearn.linear_model import LogisticRegression
+reg=LogisticRegression()
+print(reg)
+reg.fit(xtrain,ytrain)
+y_pred=reg.predict(xtest)
+
+from sklearn.metrics import accuracy_score
+print(accuracy_score(ytest,y_pred))
+
+from sklearn.metrics import confusion_matrix
+cm=confusion_matrix(ytest,y_pred)
+print(cm)
+
+tp=cm[1,1]
+tn=cm[0,0]
+fp=cm[0,1]
+fn=cm[1,0]
+TN,FP,FN,TP=cm.ravel() // another method
+print(TP)
+accuracy=(tp+tn)/(tp+tn+fp+fn)
+error=1-accuracy
+precision=tp/(tp+fp)
+recall=tp/(tp+fn)
+print(accuracy)
+print(error)
+print(precision)
+print(recall)
+
+from sklearn.metrics import classification_report
+print(classification_report(ytest, y_pred))

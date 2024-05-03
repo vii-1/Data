@@ -1,0 +1,40 @@
+import pandas as pd
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+df = pd.read_csv('Iris.csv')
+df.head()
+df.info()
+df.isnull().sum()
+df['Species'].value_counts()
+
+
+species = df['Species'].unique()
+numeric = df.select_dtypes(include='float64')
+
+group = df.groupby('Species')
+
+for s in species:
+    individual_species = group.get_group(s)
+    print('\nSpecies : ', s, '\n')
+    print(individual_species.describe())
+
+def statistic(data):
+    mean = sum(data) / len(data)
+    variance = (sum((x-mean)**2 for x in data))/(len(data)-1)
+    std = variance ** 0.5
+    print('Mean : ', mean)
+    print('Variance : ', variance)
+    print('Standard Deviation : ', std)
+
+for s in species:
+    new_data = group.get_group(s)
+    for i in numeric:
+        print("\n",s, " - ", i, "\n")
+        statistic(new_data[i])
+
+plt.figure(figsize=(10,8))
+for n in numeric:
+    sns.boxplot(x=n, y='Species', data=df)
+    plt.show()
